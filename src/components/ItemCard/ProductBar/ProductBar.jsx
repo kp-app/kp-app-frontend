@@ -4,7 +4,7 @@ const Textarea = styled.input.attrs(props => ({
     type: "text",
     size: props.size || "1em",
   }))`
-    border: 2px solid palevioletred;
+    border: 2px solid var(--elements-border-color);
     margin: ${props => props.size} 0;
     padding: ${props => props.size};
     width: var(--search-bar-width);
