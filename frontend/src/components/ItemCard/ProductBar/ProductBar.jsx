@@ -8,6 +8,7 @@ const Textarea = styled.input.attrs(props => ({
     margin: ${props => props.size} 0;
     padding: ${props => props.size};
     width: var(--search-bar-width);
+    font-size: var(--big-button-font-size)
   `;
 
 export const ProductBar = (props) => {
