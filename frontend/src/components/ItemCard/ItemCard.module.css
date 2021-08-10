@@ -1,10 +1,20 @@
+.card_container {
+    display: flex;
+    flex-direction: column;
+    width: 1000px;
+    margin: auto;
+}
+
 .card {
     display: flex;
     flex-direction: column;
     width: 1000px;
     background-color: rgb(233, 219, 202);
-    padding-left: 30px;
     margin: auto;
+}
+
+.searchbar_align {
+    padding-left: var(--card-common-padding-size);
 }
 
 .category_selector {
@@ -12,6 +22,7 @@
     flex-direction: row;
     align-items: center;
     margin-top: 10px; 
+    margin-left: var(--card-common-padding-size);
 }
 
 button {
