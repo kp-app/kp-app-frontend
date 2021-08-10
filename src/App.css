@@ -1,0 +1,10 @@
+.App {
+    --search-bar-width: 800px;
+}
+
+.items {
+    display: flex;
+    flex-direction: column-reverse;
+    width: 100%;
+    padding-top: 10px;
+}
