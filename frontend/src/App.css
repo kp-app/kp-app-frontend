@@ -1,12 +1,15 @@
 .App {
     --options-row-padding-size: 20px;
+    --card-common-padding-size: 30px;
 
+    --secondary-color: rgb(233, 233, 96);
     --elements-border-color: palevioletred;
     --danger-color: red;
     --button-click-color: darkgrey;
     --solid-button-line-color: white;
     --solid-button-primary-color: brown;
 
+    --card-width: 1000px;
     --search-bar-width: 800px;
     --search-bar-height: 70px;
     --big-button-width: calc(var(--search-bar-width)*0.3);
