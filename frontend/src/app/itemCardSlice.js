@@ -42,7 +42,7 @@ const itemCardSlice = createSlice({
             state.currentTextInSearch = action.payload
             // Try to predict
             let query = state.currentTextInSearch
-            if (items && query) {
+            if (items && query.length > 4) {
                 state.searchPredictions = items.filter(item => item.fullName.includes(query))
             }
             
