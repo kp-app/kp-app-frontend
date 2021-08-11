@@ -4,7 +4,7 @@ import itemCardSlice from './itemCardSlice'
 
 
 
-export default store = configureStore({
+export default configureStore({
   reducer: {
       itemCard: itemCardSlice,
   },
