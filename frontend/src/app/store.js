@@ -1,5 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
+import itemCardSlice from './itemCardSlice'
 
-export const store = configureStore({
-  reducer: {},
+
+
+
+export default store = configureStore({
+  reducer: {
+      itemCard: itemCardSlice,
+  },
 })
