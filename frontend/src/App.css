@@ -6,6 +6,12 @@
 
 .items {
     display: flex;
-    flex-direction: column-reverse;
+    flex-direction: column;
+    padding-top: 10px;
+}
+
+.added_items {
+    display: flex;
+    flex-direction: column;
     padding-top: 10px;
 }
