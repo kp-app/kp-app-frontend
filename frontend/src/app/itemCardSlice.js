@@ -13,21 +13,21 @@ const initialState = {
             fullName: "Dummy Bot 7iA/L AB",
             itemModel: "Dummy Bot 7iA/L",
             cost: "77000",
-            priceClient: "90010",
+            priceCustomer: "90010",
             pricePartner: "81000"
         },
         {
             fullName: "Cool Bot 777 iA/L A",
             itemModel: "Cool Bot 777 iA/L",
             cost: "977000",
-            priceClient: "990010",
+            priceCustomer: "990010",
             pricePartner: "981000"
         },
         {
             fullName: "Cool Bot CX iA/L A",
             itemModel: "Cool Bot 999 iA/L",
             cost: "977000",
-            priceClient: "990010",
+            priceCustomer: "990010",
             pricePartner: "981000"
         }
     ]
