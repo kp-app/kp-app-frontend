@@ -7,21 +7,29 @@ const initialState = {
     currentCategory: "Cobots Universal Dummy",
     currentTextInSearch: "",
     searchPredictions: [],
+    currentItem: {},
     items: [
         {
             fullName: "Dummy Bot 7iA/L AB",
             itemModel: "Dummy Bot 7iA/L",
-            cost: 77000,
-            priceClient: 90010,
-            pricePartner: 81000
+            cost: "77000",
+            priceClient: "90010",
+            pricePartner: "81000"
         },
         {
             fullName: "Cool Bot 777 iA/L A",
             itemModel: "Cool Bot 777 iA/L",
-            cost: 977000,
-            priceClient: 990010,
-            pricePartner: 981000
-        } 
+            cost: "977000",
+            priceClient: "990010",
+            pricePartner: "981000"
+        },
+        {
+            fullName: "Cool Bot CX iA/L A",
+            itemModel: "Cool Bot 999 iA/L",
+            cost: "977000",
+            priceClient: "990010",
+            pricePartner: "981000"
+        }
     ]
 }
 
@@ -49,8 +57,25 @@ const itemCardSlice = createSlice({
             let items = state.items
             if (items && query.length >= 4) {
                 state.searchPredictions = items.filter(item => searchEveryWord(item.fullName, query))
+                if (state.searchPredictions.length > 1) {
+                    state.currentItem = {}
+                }
             }
             
+        },
+        selectItem(state, action) {
+           try { state.currentItem = state.items.filter(item => item.fullName === action.payload)[0]}
+           catch(IndexError) {
+               state.currentItem = {}
+           }
+
+        },
+        submitItem(state) {
+            // submit state.currentItem
+            state.currentItem = {}
+        },
+        clearItem(state) {
+            state.currentItem = {}
         },
         clearSearchBar(state) {
             state.currentTextInSearch = ""
@@ -60,6 +85,6 @@ const itemCardSlice = createSlice({
     }
 })
 
-export const { fetchCategories, fetchItems, pickCategory, typeToSearchBar, clearSearchBar } = itemCardSlice.actions
+export const { fetchCategories, fetchItems, pickCategory, typeToSearchBar, selectItem, submitItem, clearItem, clearSearchBar } = itemCardSlice.actions
 
 export default itemCardSlice.reducer
