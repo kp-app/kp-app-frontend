@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components"
 import { clearItem, clearSearchBar, submitItem, typeToSearchBar } from "../../../app/itemCardSlice";
+import { addItem } from "../../../app/productsSlice";
 import { Predictions } from "./Predictions";
 
 const Textarea = styled.input.attrs(props => ({
@@ -37,8 +38,10 @@ export const ProductBar = (props) => {
 
     const handleSubmit =(e) => {
       e.preventDefault()
-      dispatch(submitItem())
-      dispatch(clearSearchBar())
+      if (currentItem) {
+        dispatch(addItem(currentItem))
+        dispatch(clearSearchBar())
+      }
     }
     
     return (
