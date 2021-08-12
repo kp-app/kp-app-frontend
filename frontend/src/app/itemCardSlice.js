@@ -10,6 +10,7 @@ const initialState = {
     currentItem: {},
     items: [
         {
+            category: "Cobots Universal Dummy",
             fullName: "Dummy Bot 7iA/L AB",
             itemModel: "Dummy Bot 7iA/L",
             cost: "77000",
@@ -17,6 +18,7 @@ const initialState = {
             pricePartner: "81000"
         },
         {
+            category: "Cobots Universal Dummy",
             fullName: "Cool Bot 777 iA/L A",
             itemModel: "Cool Bot 777 iA/L",
             cost: "977000",
@@ -24,6 +26,7 @@ const initialState = {
             pricePartner: "981000"
         },
         {
+            category: "Cobots Universal Dummy",
             fullName: "Cool Bot CX iA/L A",
             itemModel: "Cool Bot 999 iA/L",
             cost: "977000",

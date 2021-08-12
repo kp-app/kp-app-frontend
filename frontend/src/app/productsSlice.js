@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit"
 const initialState = {
     addedProducts: [
         // {
+        //     category: ""
         //     fullName: "Dummy Bot 7iA/L AB",
         //     itemModel: "Dummy Bot 7iA/L",
         //     cost: "77000",
