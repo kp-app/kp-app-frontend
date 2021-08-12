@@ -3,10 +3,12 @@ import styled from "styled-components"
 import { selectItem } from "../../../app/itemCardSlice"
 
 const PredictionDiv = styled.div`
+    height: 30px;
 `
 
 const SelectedPredictionDiv = styled.div`
     background-color: blue;
+    height: 30px;
 `
 
 const PredictionContainer = styled.div`
@@ -23,7 +25,7 @@ export const Predictions = (props) => {
         dispatch(selectItem(e.target.textContent))
     }
 
-    // TODO fix displays
+    // TODO fix displays. Prices also freeze, this isn't good
     // TODO fix event listener to listen on whole div
 
     return (
