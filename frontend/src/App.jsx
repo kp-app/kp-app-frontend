@@ -13,8 +13,8 @@ function App() {
       </div>
       <AddButton />
       <div className="added_items">
-        <AddedItems />
         <FinalPrice />
+        <AddedItems />
       </div>
     </div>
   )
