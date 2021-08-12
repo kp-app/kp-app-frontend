@@ -33,20 +33,20 @@ border-radius: 10px;
 `
 
 export const PriceBar = (props) => {
-    const currentItem = useSelector(state => state.itemCard.currentItem) || {cost: "", pricePartner: "", priceClient: ""}
+    
     return (
         <PricingBar>
                 <OutLine/>
                 <PriceRow>
                     <PricesBlock>
                         <Price>
-                            Себестоимость: {currentItem.cost}
+                            Себестоимость: {props.cost}
                         </Price>
                         <Price>
-                            Цена интегратору: {currentItem.pricePartner}
+                            Цена интегратору: {props.pricePartner}
                         </Price>
                         <Price>
-                            Цена заказчику: {currentItem.priceClient}
+                            Цена заказчику: {props.priceCustomer}
                         </Price>
                     </PricesBlock>
                 </PriceRow>

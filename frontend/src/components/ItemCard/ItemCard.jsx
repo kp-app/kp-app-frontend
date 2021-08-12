@@ -17,6 +17,7 @@ export const ItemCard = (props) => {
     let currentCategory = useSelector(state => state.itemCard.currentCategory)
     const items = useSelector(state => state.itemCard.items)
     const categories = useSelector(state => state.itemCard.categories)
+    const currentItem = useSelector(state => state.itemCard.currentItem) || {cost: "", pricePartner: "", priceCustomer: ""}
 
     const categoryChangeHandler = (e) => {
         let newCategory = e.target.value
@@ -36,7 +37,7 @@ export const ItemCard = (props) => {
                    </select>
                 </div>
                 <div className={searchbar_align}>
-                    <ProductBar />
+                    <ProductBar priceCustomer={currentItem.priceCustomer} cost={currentItem.cost} pricePartner={currentItem.pricePartner} />
                 </div>          
            </div>
            <PriceBar/>
