@@ -30,15 +30,15 @@ export const Predictions = (props) => {
 
     return (
         <PredictionContainer>
-            {props.predictions.map(prediction => {
+            {props.predictions.map((prediction, index) => {
                 if (currentPrediction) {
                     if (prediction.fullName !== currentPrediction.fullName) {    
-                        return (<PredictionDiv><span onMouseOver={highlightselection}>{prediction.fullName}</span></PredictionDiv>)
+                        return (<PredictionDiv key={index}><span onMouseOver={highlightselection}>{prediction.fullName}</span></PredictionDiv>)
                     } else {
-                        return ((<SelectedPredictionDiv><span>{prediction.fullName}</span></SelectedPredictionDiv>))
+                        return ((<SelectedPredictionDiv key={index}><span>{prediction.fullName}</span></SelectedPredictionDiv>))
                     }
                 } else {
-                    return (<PredictionDiv><span onMouseOver={highlightselection}>{prediction.fullName}</span></PredictionDiv>)
+                    return (<PredictionDiv key={index}><span onMouseOver={highlightselection}>{prediction.fullName}</span></PredictionDiv>)
                 }
             }
             )}
