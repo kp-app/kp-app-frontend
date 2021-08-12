@@ -1,3 +1,4 @@
+import { useSelector } from "react-redux"
 import styled from "styled-components"
 
 const PricingBar = styled.div`
@@ -32,20 +33,20 @@ border-radius: 10px;
 `
 
 export const PriceBar = (props) => {
-
+    const currentItem = useSelector(state => state.itemCard.currentItem) || {cost: "", pricePartner: "", priceClient: ""}
     return (
         <PricingBar>
                 <OutLine/>
                 <PriceRow>
                     <PricesBlock>
                         <Price>
-                            Себестоимость: 73000
+                            Себестоимость: {currentItem.cost}
                         </Price>
                         <Price>
-                            Цена интегратору: 77000
+                            Цена интегратору: {currentItem.pricePartner}
                         </Price>
                         <Price>
-                            Цена заказчику: 87000
+                            Цена заказчику: {currentItem.priceClient}
                         </Price>
                     </PricesBlock>
                 </PriceRow>
