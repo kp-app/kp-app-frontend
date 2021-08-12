@@ -1,6 +1,8 @@
 import { ItemCard } from './components/ItemCard/ItemCard'
 import './App.css'
 import { AddButton } from './components/AddButton'
+import { AddedItems } from './components/AddedItems/AddedItems'
+import { FinalPrice } from './components/FinalPrice'
 
 function App() {
 
@@ -10,6 +12,10 @@ function App() {
         <ItemCard />
       </div>
       <AddButton />
+      <div className="added_items">
+        <AddedItems />
+        <FinalPrice />
+      </div>
     </div>
   )
 }
