@@ -33,14 +33,14 @@ export const ItemCard = (props) => {
                <div className={category_selector}>
                    <select name="category_selector" id="cat_sel" onChange={categoryChangeHandler} value={currentCategory}>
                        {/* TODO Fetch data on load in useEffect */}
-                       {categories.map(category => (<option value={category}>{category}</option>))}
+                       {categories.map((category, index) => (<option value={category} key={index}>{category}</option>))}
                    </select>
                 </div>
                 <div className={searchbar_align}>
-                    <ProductBar priceCustomer={currentItem.priceCustomer} cost={currentItem.cost} pricePartner={currentItem.pricePartner} />
+                    <ProductBar />
                 </div>          
            </div>
-           <PriceBar/>
+           <PriceBar price={currentItem.price} cost={currentItem.cost} />
        </div>
     )
 }

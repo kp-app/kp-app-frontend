@@ -2,18 +2,11 @@ import { createSlice } from "@reduxjs/toolkit"
 
 const initialState = {
     addedProducts: [
-        // {
-        //     category: ""
-        //     fullName: "Dummy Bot 7iA/L AB",
-        //     itemModel: "Dummy Bot 7iA/L",
-        //     cost: "77000",
-        //     priceCustomer: "90010",
-        //     pricePartner: "81000"
-        // }     
     ],
     priceTable: {
         itemNames: [],
-        prices: []
+        prices: [],
+        costs: []
     }
 }
 
@@ -28,6 +21,7 @@ const productsSlice = createSlice(
                 state.priceTable.itemNames = [...state.priceTable.itemNames, item.fullName]
                 // TODO what if we wanna send this proposal to partner, not end customer?
                 state.priceTable.prices = [...state.priceTable.prices, item.priceCustomer]
+                state.priceTable.costs = [...state.priceTable.prices, item.cost]
             },
             removeItem(state, action) {
                 let lastProductEntry = state.addedProducts.lastIndexOf(action.payload)
@@ -36,6 +30,7 @@ const productsSlice = createSlice(
                     state.addedProducts.remove(action.payload)
                     state.priceTable.itemNames.splice(lastProductEntry, 1)
                     state.priceTable.prices.splice(lastProductEntry, 1)
+                    state.priceTable.costs.splice(lastProductEntry, 1)
                 } else {
                     throw {message: "Tried to remove non-existing element :)", name: "No such value to remove"}
                 }

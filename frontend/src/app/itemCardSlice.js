@@ -14,24 +14,21 @@ const initialState = {
             fullName: "Dummy Bot 7iA/L AB",
             itemModel: "Dummy Bot 7iA/L",
             cost: "77000",
-            priceCustomer: "90010",
-            pricePartner: "81000"
+            price: "90010"
         },
-        {
+        {   
             category: "Cobots Universal Dummy",
             fullName: "Cool Bot 777 iA/L A",
             itemModel: "Cool Bot 777 iA/L",
             cost: "977000",
-            priceCustomer: "990010",
-            pricePartner: "981000"
+            price: "990010",
         },
         {
             category: "Cobots Universal Dummy",
             fullName: "Cool Bot CX iA/L A",
             itemModel: "Cool Bot 999 iA/L",
             cost: "977000",
-            priceCustomer: "990010",
-            pricePartner: "981000"
+            price: "990010",
         }
     ]
 }
@@ -83,6 +80,7 @@ const itemCardSlice = createSlice({
         clearSearchBar(state) {
             state.currentTextInSearch = ""
             state.searchPredictions = []
+            state.currentItem = {}
         },
 
     }

@@ -42,11 +42,9 @@ export const PriceBar = (props) => {
                         <Price>
                             Себестоимость: {props.cost}
                         </Price>
+                        
                         <Price>
-                            Цена интегратору: {props.pricePartner}
-                        </Price>
-                        <Price>
-                            Цена заказчику: {props.priceCustomer}
+                            Цена заказчику: {props.price}
                         </Price>
                     </PricesBlock>
                 </PriceRow>
