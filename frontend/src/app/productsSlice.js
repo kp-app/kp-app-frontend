@@ -20,7 +20,7 @@ const productsSlice = createSlice(
                 state.addedProducts = [...state.addedProducts, item]
                 state.priceTable.itemNames = [...state.priceTable.itemNames, item.fullName]
                 // TODO what if we wanna send this proposal to partner, not end customer?
-                state.priceTable.prices = [...state.priceTable.prices, item.priceCustomer]
+                state.priceTable.prices = [...state.priceTable.prices, item.price]
                 state.priceTable.costs = [...state.priceTable.prices, item.cost]
             },
             removeItem(state, action) {
