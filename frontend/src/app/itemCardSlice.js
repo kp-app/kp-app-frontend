@@ -1,9 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit"
+import { searchEveryWord } from "../utils/searchEveryWord"
 
 // create init state
 const initialState = {
-    categories: [],
-    currentCategory: "DUMMY_UNIVERSAL_COBOTS",
+    categories: ["Industrial Robots Universal Dummy", "Cobots Universal Dummy"],
+    currentCategory: "Cobots Universal Dummy",
     currentTextInSearch: "",
     searchPredictions: [],
     items: [
@@ -33,6 +34,9 @@ const itemCardSlice = createSlice({
         fetchCategories(state) {
             // idk man, it has something to do with fetching. asyncThunk bs?
         },
+        fetchItems(state, payload) {
+            // payload = category.value
+        },
         pickCategory(state, action) {
             state.currentCategory = action.payload
         },
@@ -42,8 +46,9 @@ const itemCardSlice = createSlice({
             state.currentTextInSearch = action.payload
             // Try to predict
             let query = state.currentTextInSearch
-            if (items && query.length > 4) {
-                state.searchPredictions = items.filter(item => item.fullName.includes(query))
+            let items = state.items
+            if (items && query.length >= 4) {
+                state.searchPredictions = items.filter(item => searchEveryWord(item.fullName, query))
             }
             
         },
@@ -55,6 +60,6 @@ const itemCardSlice = createSlice({
     }
 })
 
-export const { fetchCategories, pickCategory, typeToSearchBar, clearSearchBar } = itemCardSlice.actions
+export const { fetchCategories, fetchItems, pickCategory, typeToSearchBar, clearSearchBar } = itemCardSlice.actions
 
 export default itemCardSlice.reducer
