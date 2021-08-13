@@ -2,7 +2,8 @@ import { createSlice } from "@reduxjs/toolkit"
 
 const initialState = {
     addedProducts: [
-    ]
+    ],
+    tableView: false
 }
 
 const productsSlice = createSlice(
@@ -41,11 +42,14 @@ const productsSlice = createSlice(
                     throw {message: "Tried to remove non-existing element :)", name: "No such value to remove"}
                 }
                 
+            },
+            switchView(state) {
+                state.tableView = !state.tableView
             }
         }
     }
 )
 
-export const { addItem, removeItem } = productsSlice.actions
+export const { addItem, removeItem, switchView } = productsSlice.actions
 
 export default productsSlice.reducer
