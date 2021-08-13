@@ -20,13 +20,13 @@ const initialState = {
             category: "Cobots Universal Dummy",
             fullName: "Cool Bot 777 iA/L A",
             itemModel: "Cool Bot 777 iA/L",
-            cost: 977000,
-            price: 990010,
+            cost: 677000,
+            price: 690010,
         },
         {
             category: "Cobots Universal Dummy",
             fullName: "Cool Bot CX iA/L A",
-            itemModel: "Cool Bot 999 iA/L",
+            itemModel: "Cool Bot CX iA/L",
             cost: 977000,
             price: 990010,
         }
