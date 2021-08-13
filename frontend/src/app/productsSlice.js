@@ -16,12 +16,17 @@ const productsSlice = createSlice(
         initialState,
         reducers: {
             addItem(state, action) {
-                let item = action.payload
-                state.addedProducts = [...state.addedProducts, item]
-                state.priceTable.itemNames = [...state.priceTable.itemNames, item.fullName]
-                // TODO what if we wanna send this proposal to partner, not end customer?
-                state.priceTable.prices = [...state.priceTable.prices, item.price]
-                state.priceTable.costs = [...state.priceTable.prices, item.cost]
+                let lastProductEntry = state.addedProducts.map(product => product.fullName).lastIndexOf(action.payload.fullName)
+                if (lastProductEntry === -1) {
+                    let item = {...action.payload, quantity: 1}
+                    state.addedProducts = [...state.addedProducts, item]
+                    state.priceTable.itemNames = [...state.priceTable.itemNames, item.fullName]
+                    // TODO what if we wanna send this proposal to partner, not end customer?
+                    state.priceTable.prices = [...state.priceTable.prices, item.price]
+                    state.priceTable.costs = [...state.priceTable.prices, item.cost]
+                } else {
+                    state.addedProducts[lastProductEntry] = {...state.addedProducts[lastProductEntry], quantity: state.addedProducts[lastProductEntry] + 1}
+                }
             },
             removeItem(state, action) {
                 

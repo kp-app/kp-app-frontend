@@ -23,6 +23,7 @@ export const AddedItemCard = (props) => {
        <div className={card_container}>
            <div className={card}>
                <div className={controls}>
+                    <div>Количество: {item.quantity}</div>
                     <button onClick={deleteButtonHandler}>Удалить</button>
                </div>
                <div className={category_selector}>
@@ -32,7 +33,7 @@ export const AddedItemCard = (props) => {
                     <h1>{item.fullName}</h1>
                 </div>          
            </div>
-           <PriceBar price={item.price} cost={item.cost} />
+           <PriceBar item={item} />
        </div>
     )
 }
