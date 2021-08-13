@@ -33,7 +33,6 @@ export const ProductBar = (props) => {
     // such a hack, honestly
     const changeInput = (e) => {
       dispatch(typeToSearchBar(e.target.value))
-      dispatch(clearItem())
     }
 
     const handleSubmit =(e) => {
@@ -46,7 +45,7 @@ export const ProductBar = (props) => {
     
     return (
       <form onSubmit={handleSubmit}>
-        <Textarea size="1.25em" placeholder="Начните искать товар..." onChange={changeInput} value={currentItemText || searchbarText}></Textarea>
+        <Textarea size="1.5em" placeholder="Начните искать товар..." onChange={changeInput} value={searchbarText}></Textarea>
         <Predictions predictions={useSelector(state => state.itemCard.searchPredictions)} />
         <EnterSubmission />
       </form>
