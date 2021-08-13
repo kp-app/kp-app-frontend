@@ -27,7 +27,7 @@ const Button = styled.button`
     }
 `
 
-export const AddButton = (props) => {
+export const CreateTableButton = (props) => {
 
-    return <Container><Button>Добавить товар в прайс</Button></Container>
+    return <Container><Button>Создать таблицу</Button></Container>
 }

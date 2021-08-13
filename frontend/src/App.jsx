@@ -1,6 +1,6 @@
 import { ItemCard } from './components/ItemCard/ItemCard'
 import './App.css'
-import { AddButton } from './components/AddButton'
+import { CreateTableButton } from './components/CreateTableButton'
 import { AddedItems } from './components/AddedItems/AddedItems'
 import { FinalPrice } from './components/FinalPrice'
 
@@ -11,7 +11,7 @@ function App() {
       <div className="items">
         <ItemCard />
       </div>
-      <AddButton />
+      <CreateTableButton />
       <div className="added_items">
         <FinalPrice />
         <AddedItems />
