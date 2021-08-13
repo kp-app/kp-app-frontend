@@ -2,7 +2,7 @@ import { ItemCard } from './components/ItemCard/ItemCard'
 import './App.css'
 import { CreateTableButton } from './components/CreateTableButton'
 import { AddedItems } from './components/AddedItems/AddedItems'
-import { FinalPrice } from './components/FinalPrice'
+import { Total } from './components/Total'
 
 function App() {
 
@@ -13,7 +13,7 @@ function App() {
       </div>
       <CreateTableButton />
       <div className="added_items">
-        <FinalPrice />
+        <Total />
         <AddedItems />
       </div>
     </div>
