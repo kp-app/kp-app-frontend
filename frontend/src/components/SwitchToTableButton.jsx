@@ -34,5 +34,5 @@ export const CreateTableButton = (props) => {
     const dispatch = useDispatch()
     return <Container onClick={() => {
         dispatch(switchView())
-    }} ><Button>Переключить вид (таблица/карточки)</Button></Container>
+    }} ><Button>Переключить вид</Button></Container>
 }
