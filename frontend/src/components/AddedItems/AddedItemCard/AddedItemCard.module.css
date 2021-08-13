@@ -19,11 +19,14 @@
 
 .controls {
     margin: 10px 0;
-    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 20px;
+    padding: 0 var(--card-common-padding-size);
+}
+
+.controls>div {
+    font-size: var(--big-button-font-size)
 }
 
 .category_selector {
@@ -32,6 +35,15 @@
     align-items: center;
     margin-top: 10px; 
     margin-left: var(--card-common-padding-size);
+}
+
+.category_selector p {
+    padding: 0;
+    margin: 0;
+}
+
+.category_header {
+    font-size: var(--big-button-font-size)
 }
 
 button {
