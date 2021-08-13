@@ -24,10 +24,11 @@ const productsSlice = createSlice(
                 state.priceTable.costs = [...state.priceTable.prices, item.cost]
             },
             removeItem(state, action) {
-                let lastProductEntry = state.addedProducts.lastIndexOf(action.payload)
+                
+                let lastProductEntry = state.addedProducts.map(product => product.fullName).lastIndexOf(action.payload.fullName)
                 if (lastProductEntry !== -1) {
-                    // it's ok to mutate since nothing mutates anyway :)
-                    state.addedProducts.remove(action.payload)
+                    // it's ok to mutate since nothing mutates aremove(action.payload)nyway :)
+                    state.addedProducts.splice(lastProductEntry, 1)
                     state.priceTable.itemNames.splice(lastProductEntry, 1)
                     state.priceTable.prices.splice(lastProductEntry, 1)
                     state.priceTable.costs.splice(lastProductEntry, 1)
