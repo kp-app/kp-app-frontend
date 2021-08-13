@@ -1,4 +1,7 @@
+import { useDispatch } from "react-redux"
+
 import styled from "styled-components"
+import { switchView } from "../app/productsSlice"
 
 const Container = styled.div`
     display: flex;
@@ -28,6 +31,8 @@ const Button = styled.button`
 `
 
 export const CreateTableButton = (props) => {
-
-    return <Container><Button>Создать таблицу</Button></Container>
+    const dispatch = useDispatch()
+    return <Container onClick={() => {
+        dispatch(switchView())
+    }} ><Button>Переключиться на таблицу</Button></Container>
 }
