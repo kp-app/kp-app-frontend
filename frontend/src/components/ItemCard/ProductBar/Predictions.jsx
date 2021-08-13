@@ -2,13 +2,27 @@ import { useDispatch, useSelector } from "react-redux"
 import styled from "styled-components"
 import { selectItem } from "../../../app/itemCardSlice"
 
+const PredictionSpan = styled.span`
+    width: 100%;
+    font-size: var(--big-button-font-size);
+    margin-left: var(--big-button-font-size);
+`
+
 const PredictionDiv = styled.div`
-    height: 30px;
+    width: var(--search-bar-width);
+    display: flex;
+    align-items: center;
+    height: 50px;
+    padding: 0 var(--big-button-font-size);
 `
 
 const SelectedPredictionDiv = styled.div`
+    width: var(--search-bar-width);
+    display: flex;
+    align-items: center;
     background-color: blue;
-    height: 30px;
+    height: 50px;
+    padding-left: 0 var(--big-button-font-size);
 `
 
 const PredictionContainer = styled.div`
@@ -20,25 +34,25 @@ const PredictionContainer = styled.div`
 export const Predictions = (props) => {
     const dispatch = useDispatch()
     let currentPrediction = useSelector(state => state.itemCard.currentItem) //could be undefined
-    const highlightselection = (e) => {
+    const highlightSelection = (e) => {
         // TODO add listening to arrow buttons
-        dispatch(selectItem(e.target.textContent))
+        if (e.keyCode === 13) {
+            console.log("listening")
+        }
+        dispatch(selectItem(e.target.firstChild.textContent))
     }
-
-    // TODO fix displays. Prices also freeze, this isn't good
-    // TODO fix event listener to listen on whole div
 
     return (
         <PredictionContainer>
             {props.predictions.map((prediction, index) => {
                 if (currentPrediction) {
                     if (prediction.fullName !== currentPrediction.fullName) {    
-                        return (<PredictionDiv key={index}><span onMouseOver={highlightselection}>{prediction.fullName}</span></PredictionDiv>)
+                        return (<PredictionDiv onMouseOver={highlightSelection} key={index}><PredictionSpan>{prediction.fullName}</PredictionSpan></PredictionDiv>)
                     } else {
-                        return ((<SelectedPredictionDiv key={index}><span>{prediction.fullName}</span></SelectedPredictionDiv>))
+                        return ((<SelectedPredictionDiv key={index}><PredictionSpan>{prediction.fullName}</PredictionSpan></SelectedPredictionDiv>))
                     }
                 } else {
-                    return (<PredictionDiv key={index}><span onMouseOver={highlightselection}>{prediction.fullName}</span></PredictionDiv>)
+                    return (<PredictionDiv key={index} onMouseOver={highlightSelection}><PredictionSpan>{prediction.fullName}</PredictionSpan></PredictionDiv>)
                 }
             }
             )}
