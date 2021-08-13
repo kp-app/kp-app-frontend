@@ -16,12 +16,12 @@ export const Total = () => {
     if (products.length > 1) {
         const totalCost = products.reduce((acc, cur) => {    
             console.log(acc, cur)
-            return acc.cost*acc.quantity + cur.cost*cur.quantity
-        })
+            return acc += cur.cost*cur.quantity
+        }, 0)
 
         const totalPrice = products.reduce((acc, cur) => {
-            return acc.cost*acc.quantity + cur.cost*cur.quantity
-        })
+            return acc += cur.cost*cur.quantity
+        }, 0)
 
         return (
             <PriceDiv className="">
@@ -30,7 +30,6 @@ export const Total = () => {
             </PriceDiv>
         )
     } else if (products.length === 1) {
-        console.log(products[0].cost)
         return (
             <PriceDiv className="">
                 <h1>Итого</h1>
