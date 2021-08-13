@@ -40,7 +40,7 @@ export const ItemCard = (props) => {
                     <ProductBar />
                 </div>          
            </div>
-           <PriceBar item={currentItem} />
+           <PriceBar cost={currentItem.cost} price={currentItem.price} quantity={1} />
        </div>
     )
 }

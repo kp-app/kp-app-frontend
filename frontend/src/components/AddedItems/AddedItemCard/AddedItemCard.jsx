@@ -33,7 +33,7 @@ export const AddedItemCard = (props) => {
                     <h1>{item.fullName}</h1>
                 </div>          
            </div>
-           <PriceBar item={item} />
+           <PriceBar cost={item.cost} price={item.price} quantity={item.quantity} />
        </div>
     )
 }
