@@ -15,7 +15,6 @@ export const Total = () => {
 
     if (products.length > 1) {
         const totalCost = products.reduce((acc, cur) => {    
-            console.log(acc, cur)
             return acc += cur.cost*cur.quantity
         }, 0)
 
