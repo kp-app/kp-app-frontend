@@ -33,25 +33,18 @@ border-radius: 10px;
 `
 
 export const PriceBar = (props) => {
-    let item = props.item
-    if (item) {
-        if (item.quantity > 1) {
-            item = {...item, cost: cost*item.quantity, price: price*item.quantity}
-        }
-    } else {
-        item = {cost: null, price: null}
-    }
+    
     return (
         <PricingBar>
                 <OutLine/>
                 <PriceRow>
                     <PricesBlock>
                         <Price>
-                            Себестоимость: {item.cost}
+                            Себестоимость: {props.cost ? props.quantity * props.cost : props.cost}
                         </Price>
                         
                         <Price>
-                            Цена заказчику: {item.price}
+                            Цена заказчику: {props.price ? props.quantity * props.price : props.price}
                         </Price>
                     </PricesBlock>
                 </PriceRow>
