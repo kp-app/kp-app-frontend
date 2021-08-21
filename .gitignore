@@ -3,3 +3,8 @@ node_modules
 dist
 dist-ssr
 *.local
+.idea/.gitignore
+.idea/kp-app.iml
+.idea/modules.xml
+.idea/vcs.xml
+.idea/codeStyles/codeStyleConfig.xml
