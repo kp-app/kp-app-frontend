@@ -28,7 +28,6 @@ export const ProductBar = (props) => {
     let searchbarText = useSelector(state => state.itemCard.currentTextInSearch)
     // freezes when we have an item in place w/o hack below
     let currentItem = useSelector(state => state.itemCard.currentItem)
-    let currentItemText = currentItem ? currentItem.fullName : undefined
     
     // such a hack, honestly
     const changeInput = (e) => {
@@ -40,6 +39,14 @@ export const ProductBar = (props) => {
       if (currentItem) {
         dispatch(addItem(currentItem))
         dispatch(clearSearchBar())
+      }
+    }
+
+    const handleArrowKeys = (e) => {
+      if (e.keyCode === 40) {
+
+      } else if (e.keyCode === 37) {
+
       }
     }
     
