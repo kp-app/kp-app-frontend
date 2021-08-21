@@ -35,10 +35,6 @@ export const Predictions = (props) => {
     const dispatch = useDispatch()
     let currentPrediction = useSelector(state => state.itemCard.currentItem) //could be undefined
     const highlightSelection = (e) => {
-        // TODO add listening to arrow buttons
-        if (e.keyCode === 13) {
-            console.log("listening")
-        }
         dispatch(selectItem(e.target.firstChild.textContent))
     }
 
