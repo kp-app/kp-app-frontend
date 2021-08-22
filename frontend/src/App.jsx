@@ -6,7 +6,19 @@ import {Total} from './components/Total'
 import {useSelector} from 'react-redux'
 import {TableOutput} from './components/TableOutput/TableOutput'
 import styled from "styled-components";
+import {Header} from "./components/Header/Header";
 
+
+const TRedWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
+
+const TRedLogoPlaceholder = styled.div`
+  background: url("https://www.rusprofile.ru/storage/logo_7ac096ff528a7d261babb131a5f7bf3c/500x500/9b1d88de97543124bd2d24aa82f97972.png");
+`
 
 const Items = (props) => {
     const isCards = useSelector(state => state.products.tableView)
@@ -22,7 +34,6 @@ const Items = (props) => {
     )
 }
 
-const TRedWrapper = styled.div``
 
 const AddedCards = (props) => {
     return (
@@ -38,9 +49,12 @@ function App() {
 
 
     return (
-        <div className="App">
-            {isAuthenticated && <Items/>}
-            {!isAuthenticated && <TRedWrapper/>}
+        <div>
+            <Header/>
+            <div className="App">
+                {isAuthenticated && <Items/>}
+                {!isAuthenticated && <TRedWrapper>asdawda<TRedLogoPlaceholder/></TRedWrapper>}
+            </div>
         </div>
     )
 
