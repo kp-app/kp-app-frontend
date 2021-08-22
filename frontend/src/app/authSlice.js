@@ -1,5 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit"
-import {backendUrl} from "../../backendData"
+import {backendUrl} from "../../backendConfig"
 
 const initialState = {
     currentCredentials: {
