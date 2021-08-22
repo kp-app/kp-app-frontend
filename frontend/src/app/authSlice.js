@@ -6,12 +6,14 @@ const initialState = {
         username: "",
         password: ""
     },
-    token: ""
+    token: "",
+    user: "",
+    popupOpen: false
 }
 
 export const login = createAsyncThunk(
     'auth/login',
-    async (credentials, {rejectWithValue, dispatch}) => {
+    async (credentials, {fulfillWithValue, rejectWithValue, dispatch}) => {
         try {
             const response = await fetch(`${backendUrl}auth/login`, {
                 method: 'POST',
@@ -20,8 +22,11 @@ export const login = createAsyncThunk(
             if (!response.ok) {
                 throw new Error('Failed to return data from API')
             }
-            dispatch(switchLoginState(response.headers.split('Bearer ').slice(1)[0]))
+            let username = credentials.username
+            console.log(response.headers)
+            dispatch(switchLoginState(response.headers['Auth'].split('Bearer ').slice(1)[0]))
             dispatch(clearCredentials())
+            return fulfillWithValue(username)
         } catch (e) {
             return rejectWithValue(e.message)
         }
@@ -46,18 +51,26 @@ const authSlice = createSlice({
 
         logout(state) {
             state.token = ""
+            state.user = ""
         },
         clearCredentials(state) {
             state.currentCredentials.username = ""
             state.currentCredentials.password = ""
+        },
+        togglePopup(state) {
+            state.popupOpen = !state.popupOpen
         }
     },
     extraReducers: {
-        [login.pending]: {},
-        [login.rejected]: {},
-        [login.fulfilled]: {}
+        [login.pending]: (state, payload) => {
+        },
+        [login.rejected]: (state, payload) => {
+        },
+        [login.fulfilled]: (state, payload) => {
+            state.user = payload
+        }
     }
 })
 
-export const {switchLoginState, typeUsername, typePassword, logout, clearCredentials} = authSlice.actions
+export const {switchLoginState, typeUsername, typePassword, logout, clearCredentials, togglePopup} = authSlice.actions
 export default authSlice.reducer
