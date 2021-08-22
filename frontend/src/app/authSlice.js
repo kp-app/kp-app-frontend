@@ -1,4 +1,4 @@
-import {createSlice} from "@reduxjs/toolkit"
+import {createAsyncThunk, createSlice} from "@reduxjs/toolkit"
 import {backendUrl} from "../../backendConfig"
 
 const initialState = {
@@ -9,17 +9,31 @@ const initialState = {
     token: ""
 }
 
+export const login = createAsyncThunk(
+    'auth/login',
+    async (credentials, {rejectWithValue, dispatch}) => {
+        try {
+            const response = await fetch(`${backendUrl}auth/login`, {
+                method: 'POST',
+                body: JSON.stringify({credentials})
+            })
+            if (!response.ok) {
+                throw new Error('Failed to return data from API')
+            }
+            dispatch(switchLoginState(response.headers.split('Bearer ').slice(1)[0]))
+            dispatch(clearCredentials())
+        } catch (e) {
+            return rejectWithValue(e.message)
+        }
+    }
+)
+
 const authSlice = createSlice({
     name: "auth",
     initialState,
     reducers: {
-        async login(state) {
-            const token = await fetch(`${backendUrl}auth/login`, {
-                body: JSON.stringify({...state.currentCredentials})
-            })
-            state.token = token
-            state.currentCredentials.username = ""
-            state.currentCredentials.password = ""
+        switchLoginState(state, payload) {
+            state.token = payload
         },
 
         typeUsername(state, action) {
@@ -32,9 +46,18 @@ const authSlice = createSlice({
 
         logout(state) {
             state.token = ""
+        },
+        clearCredentials(state) {
+            state.currentCredentials.username = ""
+            state.currentCredentials.password = ""
         }
+    },
+    extraReducers: {
+        [login.pending]: {},
+        [login.rejected]: {},
+        [login.fulfilled]: {}
     }
 })
 
-export const {login, typeUsername, typePassword, logout} = authSlice.actions
+export const {switchLoginState, typeUsername, typePassword, logout, clearCredentials} = authSlice.actions
 export default authSlice.reducer
