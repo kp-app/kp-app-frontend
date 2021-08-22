@@ -53,7 +53,7 @@ function App() {
             <Header/>
             <div className="App">
                 {isAuthenticated && <Items/>}
-                {!isAuthenticated && <TRedWrapper>asdawda<TRedLogoPlaceholder/></TRedWrapper>}
+                {!isAuthenticated && <TRedWrapper><TRedLogoPlaceholder/></TRedWrapper>}
             </div>
         </div>
     )
