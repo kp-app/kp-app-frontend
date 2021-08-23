@@ -17,8 +17,6 @@ const ModalContent = styled.div`
   padding: 20px;
   border-radius: 12px;
   background-color: whitesmoke;
-  height: 200px;
-  width: 200px;
 `
 
 export const Popup = props => {
