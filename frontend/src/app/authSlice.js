@@ -1,6 +1,7 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit"
 import axios from "axios"
 import {backendUrl} from "../../backendConfig"
+import { setExpiringItem } from "../utils/timedLocalStorage"
 
 const initialState = {
     currentCredentials: {
@@ -72,8 +73,8 @@ const authSlice = createSlice({
         [login.fulfilled]: (state, action) => {
             state.user = action.payload.username
             state.token = action.payload.token
-            localStorage.setItem('token', action.payload.token)
-            localStorage.setItem('username', action.payload.username)
+            setExpiringItem('token', action.payload.token)
+            setExpiringItem('username', action.payload.username)
         }
     }
 })
