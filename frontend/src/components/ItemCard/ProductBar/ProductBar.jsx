@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components"
-import { clearItem, clearSearchBar, submitItem, typeToSearchBar } from "../../../app/itemCardSlice";
+import { clearSearchBar, typeToSearchBar } from "../../../app/itemCardSlice";
 import { addItem } from "../../../app/productsSlice";
 import { Predictions } from "./Predictions";
 
@@ -28,6 +28,8 @@ export const ProductBar = (props) => {
     let searchbarText = useSelector(state => state.itemCard.currentTextInSearch)
     // freezes when we have an item in place w/o hack below
     let currentItem = useSelector(state => state.itemCard.currentItem)
+    let currentCategory = useSelector(state => state.itemCard.currentCategory)
+    let currentSubcategory = useSelector(state => state.itemCard.currentSubcategory)
     
     // such a hack, honestly
     const changeInput = (e) => {
@@ -37,6 +39,7 @@ export const ProductBar = (props) => {
     const handleSubmit =(e) => {
       e.preventDefault()
       if (currentItem) {
+        currentItem = {...currentItem, category: currentCategory.name, subcategory: currentSubcategory.name}
         dispatch(addItem(currentItem))
         dispatch(clearSearchBar())
       }
