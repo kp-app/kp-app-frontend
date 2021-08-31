@@ -25,6 +25,11 @@
     margin-left: var(--card-common-padding-size);
 }
 
+.category_selector select {
+    width: 180px;
+    height: 25px;
+}
+
 button {
     background-color: var(--solid-button-primary-color);
     width: var(--big-button-width);
