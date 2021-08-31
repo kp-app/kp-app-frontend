@@ -24,7 +24,7 @@ const App = () => {
                             <Menu.Item key="4">option4</Menu.Item>
                         </SubMenu>
                         <SubMenu key="sub2" icon={<LaptopOutlined/>} title="subnav 2">
-                            <MenCu.Item key="5">option5</MenCu.Item>
+                            <Menu.Item key="5">option5</Menu.Item>
                             <Menu.Item key="6">option6</Menu.Item>
                             <Menu.Item key="7">option7</Menu.Item>
                             <Menu.Item key="8">option8</Menu.Item>
