@@ -5,11 +5,20 @@ import 'antd/dist/antd.css'
 import {Provider} from 'react-redux'
 import App from './antd/App'
 import store from './app/store'
+import {BrowserRouter, Route} from 'react-router-dom'
+import AdminApp from "./antd/AdminApp";
 
 
 ReactDOM.render(
-    <Provider store={store}>
-        <App/>
-    </Provider>,
+    <BrowserRouter>
+        <Provider store={store}>
+            <Route exact path='/'>
+                <App/>
+            </Route>
+            <Route path='/admin'>
+                <AdminApp/>
+            </Route>
+        </Provider>
+    </BrowserRouter>,
     document.getElementById('root')
 )
