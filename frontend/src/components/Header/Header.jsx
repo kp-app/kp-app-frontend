@@ -67,7 +67,7 @@ const AuthForm = props => {
         <form onSubmit={async (e) => {
             e.preventDefault()
             const thing = await dispatch(login(props.credentials))
-            console.log(thing)
+            // console.log(thing)
         }}>
             <InputsDiv>
                 <Input type={'text'} value={props.credentials.username} onChange={writeUsername}/>
