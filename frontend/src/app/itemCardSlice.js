@@ -31,7 +31,7 @@ export const loadCategories = createAsyncThunk(
                 throw new Error('Failed to return data from API')
             }
             dispatch(clearUpToCategories()) // kind of a side-effect, right?
-            return fulfillWithValue(response.data)
+            return fulfillWithValue({data: response.data})
         } catch (e) {
             return rejectWithValue(e.message)
         }
@@ -57,7 +57,35 @@ export const loadSubcategories = createAsyncThunk(
                     throw new Error('Failed to return data from API')
                 }
                 dispatch(clearItems()) // kind of a side-effect, right?
-                return fulfillWithValue(response.data)
+                // dispatch(loadItemsByCategory({token, category}))
+                return fulfillWithValue({data: response.data})
+            }
+        } catch (e) {
+            return rejectWithValue(e.message)
+        }
+    }
+)
+export const loadItemsByCategory = createAsyncThunk(
+    'itemCard/loadItemsByCategory',
+    async (data, {fulfillWithValue, rejectWithValue, dispatch}) => {
+        try {
+            let {token, category} = data
+            if (Object.keys(category).length !== 0) {
+                const config = {
+                    headers: { Authorization: `Bearer ${token}` }
+                };
+                const response = await axios.get(
+                    // TODO use proper params pls
+                    `${backendUrl}products?categoryId=${category._id}`,
+                    config
+                )
+                console.log(response)
+                if (response.status !== 200) {
+                    throw new Error('Failed to return data from API')
+                }
+                return fulfillWithValue({data: response.data, dispatch})
+            } else {
+                console.log("Broken subcat obj", category)
             }
         } catch (e) {
             return rejectWithValue(e.message)
@@ -65,8 +93,8 @@ export const loadSubcategories = createAsyncThunk(
     }
 )
 
-export const loadItems = createAsyncThunk(
-    'itemCard/loadItems',
+export const loadItemsBySubcategory = createAsyncThunk(
+    'itemCard/loadItemsBySubcategory',
     async (data, {fulfillWithValue, rejectWithValue, dispatch}) => {
         try {
             let {token, subcategory} = data
@@ -83,7 +111,7 @@ export const loadItems = createAsyncThunk(
                 if (response.status !== 200) {
                     throw new Error('Failed to return data from API')
                 }
-                return fulfillWithValue(response.data)
+                return fulfillWithValue({data: response.data, dispatch})
             } else {
                 console.log("Broken subcat obj", subcategory)
             }
@@ -146,13 +174,16 @@ const itemCardSlice = createSlice({
     },
     extraReducers: {
         [loadCategories.fulfilled]: (state, action) => {
-            state.categories = action.payload
+            state.categories = action.payload.data
         },
         [loadSubcategories.fulfilled]: (state, action) => {
-            state.subcategories = action.payload
+            state.subcategories = action.payload.data
         },
-        [loadItems.fulfilled]: (state, action) => {
-            state.items = action.payload
+        [loadItemsBySubcategory.fulfilled]: (state, action) => {
+            state.items = action.payload.data
+        },
+        [loadItemsByCategory.fulfilled]: (state, action) => {
+            state.items = action.payload.data
         },
         [loadCategories.rejected]: (state, action) => {
             console.log(action.payload)
@@ -160,7 +191,10 @@ const itemCardSlice = createSlice({
         [loadSubcategories.rejected]: (state, action) => {
             console.log(action.payload)
         },
-        [loadItems.rejected]: (state, action) => {
+        [loadItemsBySubcategory.rejected]: (state, action) => {
+            console.log(action.payload)
+        },
+        [loadItemsByCategory.rejected]: (state, action) => {
             console.log(action.payload)
         }
     }
