@@ -1,7 +1,7 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
+import {createSlice, createAsyncThunk} from "@reduxjs/toolkit"
 import axios from "axios"
-import { backendUrl } from "../../backendConfig"
-import { searchEveryWord } from "../utils/searchEveryWord"
+import {backendUrl} from "../../backendConfig"
+import {searchEveryWord} from "../utils/searchEveryWord"
 
 // create init state
 const initialState = {
@@ -21,7 +21,7 @@ export const loadCategories = createAsyncThunk(
         try {
             let {token} = data
             const config = {
-                headers: { Authorization: `Bearer ${token}` }
+                headers: {Authorization: `Bearer ${token}`}
             }
             const response = await axios.get(
                 `${backendUrl}categories`,
@@ -37,7 +37,31 @@ export const loadCategories = createAsyncThunk(
         }
     }
 )
+export const loadAllSubcats = createAsyncThunk(
+    'itemCard/loadAllSubcats',
+    async (data, {fulfillWithValue, rejectWithValue, dispatch}) => {
+        try {
+            let {token} = data
+            const config = {
+                headers: {Authorization: `Bearer ${token}`}
+            };
+            const response = await axios.get(
+                // TODO use proper params pls
+                `${backendUrl}subcategories`,
+                config
+            )
+            // console.log(response)
+            if (response.status !== 200 && response.status !== 201) {
+                throw new Error('Failed to return data from API')
+            }
+            // dispatch(loadItemsByCategory({token, category}))
+            return fulfillWithValue({data: response.data})
 
+        } catch (e) {
+            return rejectWithValue(e.message)
+        }
+    }
+)
 export const loadSubcategories = createAsyncThunk(
     'itemCard/loadSubcategories',
     async (data, {fulfillWithValue, rejectWithValue, dispatch}) => {
@@ -45,7 +69,7 @@ export const loadSubcategories = createAsyncThunk(
             let {token, category} = data
             if (Object.keys(category).length !== 0) {
                 const config = {
-                    headers: { Authorization: `Bearer ${token}` }
+                    headers: {Authorization: `Bearer ${token}`}
                 };
                 const response = await axios.get(
                     // TODO use proper params pls
@@ -72,7 +96,7 @@ export const loadItemsByCategory = createAsyncThunk(
             let {token, category} = data
             if (Object.keys(category).length !== 0) {
                 const config = {
-                    headers: { Authorization: `Bearer ${token}` }
+                    headers: {Authorization: `Bearer ${token}`}
                 };
                 const response = await axios.get(
                     // TODO use proper params pls
@@ -100,7 +124,7 @@ export const loadItemsBySubcategory = createAsyncThunk(
             let {token, subcategory} = data
             if (Object.keys(subcategory).length !== 0) {
                 const config = {
-                    headers: { Authorization: `Bearer ${token}` }
+                    headers: {Authorization: `Bearer ${token}`}
                 };
                 const response = await axios.get(
                     // TODO use proper params pls
@@ -144,13 +168,14 @@ const itemCardSlice = createSlice({
                     state.currentItem = {}
                 }
             }
-            
+
         },
         selectItem(state, action) {
-           try { state.currentItem = state.items.filter(item => item.fullName === action.payload)[0]}
-           catch(IndexError) {
-               state.currentItem = {}
-           }
+            try {
+                state.currentItem = state.items.filter(item => item.fullName === action.payload)[0]
+            } catch (IndexError) {
+                state.currentItem = {}
+            }
 
         },
         clearSearchBar(state) {
@@ -179,6 +204,9 @@ const itemCardSlice = createSlice({
         [loadSubcategories.fulfilled]: (state, action) => {
             state.subcategories = action.payload.data
         },
+        [loadAllSubcats.fulfilled]: (state, action) => {
+            state.subcategories = action.payload.data
+        },
         [loadItemsBySubcategory.fulfilled]: (state, action) => {
             state.items = action.payload.data
         },
@@ -196,13 +224,16 @@ const itemCardSlice = createSlice({
         },
         [loadItemsByCategory.rejected]: (state, action) => {
             console.log(action.payload)
+        },
+        [loadAllSubcats.rejected]: (state, action) => {
+            console.log(action.payload)
         }
     }
 })
 
-export const { 
-    pickCategory, typeToSearchBar, 
-    selectItem, clearSearchBar, 
+export const {
+    pickCategory, typeToSearchBar,
+    selectItem, clearSearchBar,
     clearUpToCategories, clearItems,
     pickSubcategory
 } = itemCardSlice.actions
