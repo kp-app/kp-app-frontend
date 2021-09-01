@@ -8,15 +8,15 @@ import {
     TreeSelect,
     Switch,
     Input,
-    Button
+    Button, Breadcrumb
 } from "antd";
 import {useState} from "react";
 
 const AdminApp = () => {
-    const [componentSize, setComponentSize] = useState('default');
+    const [componentType, setComponentType] = useState('item');
 
-    const onFormLayoutChange = ({size}) => {
-        setComponentSize(size);
+    const onFormLayoutChange = ({creationType}) => {
+        setComponentType(creationType);
     }
 
     const onSubmit = (values) => {
@@ -28,6 +28,10 @@ const AdminApp = () => {
             <Row>
                 <Col span={6}></Col>
                 <Col span={12}>
+                    <Breadcrumb style={{margin: '16px 0'}}>
+                        <Breadcrumb.Item>Админ-панель</Breadcrumb.Item>
+                        <Breadcrumb.Item>Создать</Breadcrumb.Item>
+                    </Breadcrumb>
                     <Form
                         labelCol={{
                             span: 4,
@@ -37,17 +41,17 @@ const AdminApp = () => {
                         }}
                         layout="horizontal"
                         initialValues={{
-                            size: componentSize,
+                            componentType: "item",
                         }}
                         onValuesChange={onFormLayoutChange}
-                        size={componentSize}
+                        size="default"
                         onFinish={onSubmit}
                     >
-                        <Form.Item label="Form Size" name="size">
+                        <Form.Item label="Что создаем" name="type">
                             <Radio.Group>
-                                <Radio.Button value="small">Small</Radio.Button>
-                                <Radio.Button value="default">Default</Radio.Button>
-                                <Radio.Button value="large">Large</Radio.Button>
+                                <Radio.Button value="item">Товар</Radio.Button>
+                                <Radio.Button value="category">Категория</Radio.Button>
+                                <Radio.Button value="subcategory">Подкатегория</Radio.Button>
                             </Radio.Group>
                         </Form.Item>
                         <Form.Item label="Input" name="input">
