@@ -1,7 +1,8 @@
-import {Layout, Menu, Row, Col, Button, Modal, Input} from 'antd';
-import {UserOutlined, SelectOutlined, LockFilled} from '@ant-design/icons';
+import {Layout, Menu, Row, Col, Button, Modal, Input, Popover} from 'antd';
+import {UserOutlined, SelectOutlined, LockFilled, MenuOutlined} from '@ant-design/icons';
 import {useDispatch, useSelector} from "react-redux";
 import {clearCredentials, login, logout, togglePopup, typePassword, typeUsername} from "../app/authSlice";
+import {CatalogContent} from "./components/CatalogContent/Catalog";
 
 export const AuthedHeader = (props) => {
     const dispatch = useDispatch()
@@ -35,11 +36,12 @@ export const AuthedHeader = (props) => {
                 <Row>
                     <Col span={22}>
                         <div className="logo"/>
-                        {token && <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']}>
-                            <Menu.Item key="1">nav 1</Menu.Item>
-                            <Menu.Item key="2">nav 2</Menu.Item>
-                            <Menu.Item key="3">nav 3</Menu.Item>
-                        </Menu>}
+                        {token &&
+                        <Popover content={CatalogContent} trigger="click" placement="bottomLeft" arrowPointAtCenter>
+                            <Button type="secondary" icon={<MenuOutlined/>}>
+                                Каталог
+                            </Button>
+                        </Popover>}
                     </Col>
                     <Col span={2}>
                         <Button type={'primary'} icon={!token ? <UserOutlined/> : <SelectOutlined/>}
