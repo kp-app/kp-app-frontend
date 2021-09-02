@@ -1,7 +1,7 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit"
 import axios from "axios"
 import {backendUrl} from "../../backendConfig"
-import { setExpiringItem } from "../utils/timedLocalStorage"
+import {setExpiringItem} from "../utils/timedLocalStorage"
 
 const initialState = {
     currentCredentials: {
@@ -29,8 +29,10 @@ export const login = createAsyncThunk(
             }
             let username = credentials.username
             let token = response.data.access_token
+            let isAdmin
+            response.data.role === 'admin' ? isAdmin = true : isAdmin = false
             dispatch(clearCredentials()) // kind of a side-effect, right?
-            return fulfillWithValue({username, token})
+            return fulfillWithValue({username, token, isAdmin})
         } catch (e) {
             return rejectWithValue(e.message)
         }
@@ -73,7 +75,9 @@ const authSlice = createSlice({
         [login.fulfilled]: (state, action) => {
             state.user = action.payload.username
             state.token = action.payload.token
+            state.isAdmin = action.payload.isAdmin
             setExpiringItem('token', action.payload.token)
+            setExpiringItem('isAdmin', action.payload.isAdmin)
             setExpiringItem('username', action.payload.username)
         }
     }
