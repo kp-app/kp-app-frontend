@@ -6,7 +6,6 @@ import {Provider} from 'react-redux'
 import App from './antd/App'
 import store from './app/store'
 import {BrowserRouter, Route} from 'react-router-dom'
-import AdminApp from "./antd/AdminApp";
 
 
 ReactDOM.render(
@@ -14,9 +13,6 @@ ReactDOM.render(
         <Provider store={store}>
             <Route exact path='/'>
                 <App/>
-            </Route>
-            <Route path='/admin'>
-                <AdminApp/>
             </Route>
         </Provider>
     </BrowserRouter>,

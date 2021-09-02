@@ -1,14 +1,28 @@
 import {Layout, Menu, Row, Col, Button, Modal, Input, Popover} from 'antd';
-import {UserOutlined, SelectOutlined, LockFilled, MenuOutlined} from '@ant-design/icons';
+import {
+    UserOutlined,
+    LoginOutlined,
+    LogoutOutlined,
+    LockFilled,
+    MenuOutlined,
+    CloseOutlined,
+    SlidersOutlined
+} from '@ant-design/icons';
 import {useDispatch, useSelector} from "react-redux";
 import {clearCredentials, login, logout, togglePopup, typePassword, typeUsername} from "../app/authSlice";
 import {CatalogContent} from "./components/CatalogContent/Catalog";
+import {useState} from "react";
+import AdminApp from "./AdminApp";
 
 export const AuthedHeader = (props) => {
     const dispatch = useDispatch()
     const {currentCredentials, token, user, popupOpen, error, isAdmin} = useSelector(state => state.auth)
     const {SubMenu} = Menu;
     const {Header, Content, Sider} = Layout;
+
+    const [adminPanel, toggleAdminPanel] = useState(false)
+    const handleAdminPanel = () => toggleAdminPanel(prevState => !prevState)
+
 
     const handleClick = (e) => {
         const clear = () => {
@@ -42,16 +56,25 @@ export const AuthedHeader = (props) => {
                                 Каталог
                             </Button>
                         </Popover>}
+                        {token && isAdmin &&
+                        <Button type="secondary"
+                                icon={adminPanel ? <CloseOutlined/> : <SlidersOutlined/>}
+                                onClick={handleAdminPanel}
+                        >
+                            Админ-панель
+                        </Button>
+
+                        }
                     </Col>
                     <Col span={2}>
-                        <Button type={'primary'} icon={!token ? <UserOutlined/> : <SelectOutlined/>}
+                        <Button type={'primary'} icon={!token ? <LoginOutlined/> : <LogoutOutlined/>}
                                 block={true} onClick={handleClick}>
                             {!token ? "Войти" : "Выйти"}
                         </Button>
                     </Col>
                 </Row>
             </Header>
-            {props.children}
+            {adminPanel ? <AdminApp/> : props.children}
             {!token && <Modal
                 title="Войти в систему"
                 centered
