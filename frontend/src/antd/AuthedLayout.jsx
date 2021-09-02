@@ -49,7 +49,7 @@ export const AuthedHeader = (props) => {
         <Layout>
             <Header className="header">
                 <Row>
-                    <Col span={22}>
+                    <Col span={18}>
                         <div className="logo"/>
                         {token &&
                         <Popover content={CatalogContent} trigger="click" placement="bottomLeft" arrowPointAtCenter>
@@ -57,11 +57,14 @@ export const AuthedHeader = (props) => {
                                 Каталог
                             </Button>
                         </Popover>}
+                    </Col>
+                    <Col span={3}>
                         {token && isAdmin &&
                         <NavLink to={adminPanel ? "/" : "/admin"}>
                             <Button type="secondary"
                                     icon={adminPanel ? <CloseOutlined/> : <SlidersOutlined/>}
                                     onClick={handleAdminPanel}
+                                    style={{marginRight: 20}}
                             >
 
                                 Админ-панель
@@ -70,7 +73,7 @@ export const AuthedHeader = (props) => {
                         </NavLink>
                         }
                     </Col>
-                    <Col span={2}>
+                    <Col span={3}>
                         <Button type={'primary'} icon={!token ? <LoginOutlined/> : <LogoutOutlined/>}
                                 block={true} onClick={handleClick}>
                             {!token ? "Войти" : "Выйти"}
