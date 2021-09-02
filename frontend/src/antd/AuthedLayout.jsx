@@ -12,7 +12,8 @@ import {useDispatch, useSelector} from "react-redux";
 import {clearCredentials, login, logout, togglePopup, typePassword, typeUsername} from "../app/authSlice";
 import {CatalogContent} from "./components/CatalogContent/Catalog";
 import {useState} from "react";
-import AdminApp from "./AdminApp";
+import {NavLink} from "react-router-dom";
+
 
 export const AuthedHeader = (props) => {
     const dispatch = useDispatch()
@@ -57,13 +58,16 @@ export const AuthedHeader = (props) => {
                             </Button>
                         </Popover>}
                         {token && isAdmin &&
-                        <Button type="secondary"
-                                icon={adminPanel ? <CloseOutlined/> : <SlidersOutlined/>}
-                                onClick={handleAdminPanel}
-                        >
-                            Админ-панель
-                        </Button>
+                        <NavLink to={adminPanel ? "/" : "/admin"}>
+                            <Button type="secondary"
+                                    icon={adminPanel ? <CloseOutlined/> : <SlidersOutlined/>}
+                                    onClick={handleAdminPanel}
+                            >
 
+                                Админ-панель
+
+                            </Button>
+                        </NavLink>
                         }
                     </Col>
                     <Col span={2}>
@@ -74,7 +78,7 @@ export const AuthedHeader = (props) => {
                     </Col>
                 </Row>
             </Header>
-            {adminPanel ? <AdminApp/> : props.children}
+            {props.children}
             {!token && <Modal
                 title="Войти в систему"
                 centered
