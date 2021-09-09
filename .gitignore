@@ -8,3 +8,6 @@ dist-ssr
 .idea/modules.xml
 .idea/vcs.xml
 .idea/codeStyles/codeStyleConfig.xml
+pyparser/poetry.lock
+.python-version
+pyparser/pyproject.toml
