@@ -43,6 +43,11 @@ const productsSlice = createSlice(
                 }
                 
             },
+            changePrice(state, action) {
+                let [item, newItemPrice] = action.payload
+                let productEntry = state.addedProducts.map(product => product.fullName).lastIndexOf(item.fullName)
+                state.addedProducts[productEntry] = {...state.addedProducts[productEntry], pricing: {pricelistCost: newItemPrice}}
+            },
             switchView(state) {
                 state.tableView = !state.tableView
             }
@@ -50,6 +55,6 @@ const productsSlice = createSlice(
     }
 )
 
-export const { addItem, removeItem, switchView } = productsSlice.actions
+export const { addItem, removeItem, switchView, changePrice } = productsSlice.actions
 
 export default productsSlice.reducer
