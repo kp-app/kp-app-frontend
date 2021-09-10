@@ -4,14 +4,14 @@ import {useState} from "react";
 import {useSelector} from "react-redux";
 
 
-export const ShopLikeBasicLayout = () => {
+export const ShopLikeBasicLayout = (props) => {
     const items = useSelector(state => state.itemCard.items)
 
-    const [priceFilterMenuOpen, togglePriceFilterMenu] = useState(true)
+    const [priceFilterMenuOpen, togglePriceFilterMenu] = useState(false)
 
     const {Header, Content, Sider} = Layout;
     return (
-        <Layout>
+        <Layout style={{backgroundColor: "white"}}>
             <Sider width={200} className="site-layout-background" style={{backgroundColor: "white"}}>
                 <h1>Фильтры</h1>
                 {/* TODO Fix overlay range */}
@@ -28,22 +28,9 @@ export const ShopLikeBasicLayout = () => {
                     </a>
                 </Dropdown>
             </Sider>
-            <Layout style={{padding: '0 24px 24px'}}>
-                <Breadcrumb style={{margin: '16px 0'}}>
-                    <Breadcrumb.Item>Home</Breadcrumb.Item>
-                    <Breadcrumb.Item>Products</Breadcrumb.Item>
-                </Breadcrumb>
-                <Content
-                    className="site-layout-background"
-                    style={{
-                        padding: 24,
-                        margin: 0,
-                        minHeight: 280,
-                    }}
-                >
-                    Content
-                </Content>
-            </Layout>
+            <div style={{padding: '0 24px 24px', backgroundColor: 'white'}}>
+                {props.children}
+            </div>
         </Layout>
     )
 }
