@@ -30,7 +30,7 @@ export const loadCategories = createAsyncThunk(
             if (response.status !== 200) {
                 throw new Error('Failed to return data from API')
             }
-            dispatch(clearUpToCategories()) // kind of a side-effect, right?
+            
             return fulfillWithValue({data: response.data})
         } catch (e) {
             return rejectWithValue(e.message)
@@ -47,7 +47,7 @@ export const loadAllSubcats = createAsyncThunk(
             };
             const response = await axios.get(
                 // TODO use proper params pls
-                `${backendUrl}subcategories`,
+                `${backendUrl}subcategories/all`,
                 config
             )
             // console.log(response)
@@ -56,7 +56,6 @@ export const loadAllSubcats = createAsyncThunk(
             }
             // dispatch(loadItemsByCategory({token, category}))
             return fulfillWithValue({data: response.data})
-
         } catch (e) {
             return rejectWithValue(e.message)
         }
@@ -66,21 +65,21 @@ export const loadSubcategories = createAsyncThunk(
     'itemCard/loadSubcategories',
     async (data, {fulfillWithValue, rejectWithValue, dispatch}) => {
         try {
-            let {token, category} = data
-            if (Object.keys(category).length !== 0) {
+            let {token, categoryId} = data
+            if (Object.keys(categoryId).length !== 0) {
                 const config = {
                     headers: {Authorization: `Bearer ${token}`}
                 };
                 const response = await axios.get(
                     // TODO use proper params pls
-                    `${backendUrl}subcategories?categoryId=${category._id}`,
+                    `${backendUrl}subcategories?categoryId=${categoryId}`,
                     config
                 )
                 // console.log(response)
                 if (response.status !== 200 && response.status !== 201) {
                     throw new Error('Failed to return data from API')
                 }
-                dispatch(clearItems()) // kind of a side-effect, right?
+                // dispatch(clearItems()) // kind of a side-effect, right?
                 // dispatch(loadItemsByCategory({token, category}))
                 return fulfillWithValue({data: response.data})
             }
@@ -93,23 +92,24 @@ export const loadItemsByCategory = createAsyncThunk(
     'itemCard/loadItemsByCategory',
     async (data, {fulfillWithValue, rejectWithValue, dispatch}) => {
         try {
-            let {token, category} = data
-            if (Object.keys(category).length !== 0) {
+            let {token, categoryId} = data
+            
+            if (Object.keys(categoryId).length !== 0) {
                 const config = {
                     headers: {Authorization: `Bearer ${token}`}
                 };
                 const response = await axios.get(
                     // TODO use proper params pls
-                    `${backendUrl}products?categoryId=${category._id}`,
+                    `${backendUrl}products/category?categoryId=${categoryId}`,
                     config
                 )
                 console.log(response)
                 if (response.status !== 200) {
                     throw new Error('Failed to return data from API')
                 }
-                return fulfillWithValue({data: response.data, dispatch})
+                return fulfillWithValue({data: {items: response.data, category: categoryId}})
             } else {
-                console.log("Broken subcat obj", category)
+                console.log("Broken subcat obj", categoryId)
             }
         } catch (e) {
             return rejectWithValue(e.message)
@@ -135,9 +135,9 @@ export const loadItemsBySubcategory = createAsyncThunk(
                 if (response.status !== 200) {
                     throw new Error('Failed to return data from API')
                 }
-                return fulfillWithValue({data: response.data, dispatch})
+                return fulfillWithValue({data: {items: response.data, subcategory: subcategory}})
             } else {
-                console.log("Broken subcat obj", subcategory)
+                console.log("Broken subcat obj", subcategoryId)
             }
         } catch (e) {
             return rejectWithValue(e.message)
@@ -154,34 +154,6 @@ const itemCardSlice = createSlice({
         },
         pickSubcategory(state, action) {
             state.currentSubcategory = state.subcategories.filter(subcat => subcat.name === action.payload)[0]
-        },
-        // searchBar text/predictions
-        typeToSearchBar(state, action) {
-            // payload = whole field
-            state.currentTextInSearch = action.payload
-            // Try to predict
-            let query = state.currentTextInSearch
-            let items = state.items
-            if (items && query.length >= 4) {
-                state.searchPredictions = items.filter(item => searchEveryWord(item.fullName, query))
-                if (state.searchPredictions.length > 1) {
-                    state.currentItem = {}
-                }
-            }
-
-        },
-        selectItem(state, action) {
-            try {
-                state.currentItem = state.items.filter(item => item.fullName === action.payload)[0]
-            } catch (IndexError) {
-                state.currentItem = {}
-            }
-
-        },
-        clearSearchBar(state) {
-            state.currentTextInSearch = ""
-            state.searchPredictions = []
-            state.currentItem = {}
         },
         clearUpToCategories(state) {
             state.subcategories = []
@@ -208,10 +180,10 @@ const itemCardSlice = createSlice({
             state.subcategories = action.payload.data
         },
         [loadItemsBySubcategory.fulfilled]: (state, action) => {
-            state.items = action.payload.data
+            state.items = [...state.items, {subcategory: action.payload.data.subcategory, items: action.payload.data.items}]
         },
         [loadItemsByCategory.fulfilled]: (state, action) => {
-            state.items = action.payload.data
+            state.items = [...state.items, {category: action.payload.data.category, items: action.payload.data.items}]
         },
         [loadCategories.rejected]: (state, action) => {
             console.log(action.payload)
@@ -232,8 +204,7 @@ const itemCardSlice = createSlice({
 })
 
 export const {
-    pickCategory, typeToSearchBar,
-    selectItem, clearSearchBar,
+    pickCategory,
     clearUpToCategories, clearItems,
     pickSubcategory
 } = itemCardSlice.actions
