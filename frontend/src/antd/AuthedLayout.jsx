@@ -6,7 +6,8 @@ import {
     LockFilled,
     MenuOutlined,
     CloseOutlined,
-    SlidersOutlined
+    SlidersOutlined,
+    ShoppingCartOutlined
 } from '@ant-design/icons';
 import {useDispatch, useSelector} from "react-redux";
 import {clearCredentials, login, logout, togglePopup, typePassword, typeUsername} from "../app/authSlice";
@@ -24,6 +25,8 @@ export const AuthedHeader = (props) => {
     const [adminPanel, toggleAdminPanel] = useState(false)
     const handleAdminPanel = () => toggleAdminPanel(prevState => !prevState)
 
+    const [cart, toggleCart] = useState(false)
+    const handleCartToggle = () => toggleCart(prevState => !prevState)
 
     const handleClick = (e) => {
         const clear = () => {
@@ -49,7 +52,7 @@ export const AuthedHeader = (props) => {
         <Layout>
             <Header className="header">
                 <Row>
-                    <Col span={18}>
+                    <Col span={16}>
                         <div className="logo"/>
                         {token &&
                         <Popover content={CatalogContent} trigger="click" placement="bottomLeft" arrowPointAtCenter>
@@ -57,6 +60,16 @@ export const AuthedHeader = (props) => {
                                 Каталог
                             </Button>
                         </Popover>}
+                    </Col>
+                    <Col span={2}>
+                        {token && <NavLink to={"/cart"}>
+                            <Button type="secondary"
+                                    icon={<ShoppingCartOutlined />}
+                                    onClick={handleCartToggle}
+                                    style={{marginRight: 10}}
+                            >
+                            </Button>
+                        </NavLink>}
                     </Col>
                     <Col span={3}>
                         {token && isAdmin &&
