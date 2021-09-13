@@ -19,10 +19,10 @@ export const ItemsBySubcat = (props) => {
                 gridTemplateColumns: "repeat(auto-fill, minmax(200px, 5fr))"
             }}>
                 {items.map(item => <Card title={null} bordered={true}>
-                    <div style={{display: "flex", flexDirection: "column", justifyContent: "space-between", alignItems: "center"}}>
+                    <div style={{display: "flex", flexDirection: "column", justifyContent: "space-between", alignItems: "center"}} key={item._id}>
                         <div>{item.fullName}</div>
                             <AddButton item={item}/>
-                        <div>Стоимость {item.pricing.pricelistCost !== 0 ? item.pricing.pricelistCost : "недоступна"}</div>
+                        <div>Стоимость {item.pricing.pricelistCost !== 0 ? `€ ${item.pricing.pricelistCost}` : "не указана"}</div>
                     </div>
                 </Card>)}
         </div>
