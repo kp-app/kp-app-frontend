@@ -19,7 +19,7 @@ export const ItemGrid = (props) => {
     // display grid
     return (
         <>
-            {subcategories.map((subcat, index) => <div style={{width: 1200}}>
+            {subcategories.map((subcat, index) => <div style={{width: 1200}} key={subcat._id}>
                 <h1>{subcat.name}</h1>
                 <ItemsBySubcat token={token} subcategory={subcat}/>
             </div>)}
