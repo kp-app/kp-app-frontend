@@ -10,9 +10,13 @@ export const AddButton = props => {
     const handleToggle = (e) => {
         toggleAdd(prevState => !prevState)
         !isAdded ? dispatch(addItem(props.item)) : dispatch(removeItem(props.item))
-        !isAdded ? setTimeout(() => {
+        let delay;
+        !isAdded ? delay = setTimeout(() => {
             toggleAdd(prevState => !prevState)
         }, 2500) : null
+        return (delay) => {
+            delay ? clearTimeout(delay) : null 
+        } 
     }
     return <Button icon={isAdded ? <CheckOutlined /> : null} onClick={handleToggle}>{isAdded ? "Добавлено в КП" : "Добавить в КП"}</Button>
 }
