@@ -33,6 +33,34 @@ export const updateItemPrice = createAsyncThunk(
     }
 )
 
+export const createItem = createAsyncThunk(
+    'products/create',
+    async (data, {fulfillWithValue, rejectWithValue, dispatch}) => {
+        try {
+            const {token, params, payload} = data
+            const config = {
+                headers: {Authorization: `Bearer ${token}`}
+            };
+            // encodes automatically
+            const url = !params.subcategoryId ? `${backendUrl}products?categoryId=${params.categoryId}` : 
+            `${backendUrl}products?categoryId=${params.categoryId}&subcategoryId=${params.subcategoryId}`
+            const response = await axios.post(
+                url,
+                payload,
+                config,
+            )
+            
+            if (response.status !== 200 && response.status !== 201) {
+                throw new Error('Failed to return data from API')
+            }
+            
+            return fulfillWithValue({data: response.data})
+        } catch (e) {
+            return rejectWithValue(e.message)
+        }
+    }
+)
+
 const productsSlice = createSlice(
     {
         name: "products",
@@ -84,6 +112,12 @@ const productsSlice = createSlice(
                 console.log(action.payload)
             },
             [updateItemPrice.rejected]: (state, action) => {
+                console.log(action.payload)
+            },
+            [createItem.fulfilled]: (state, action) => {
+                console.log(action.payload)
+            },
+            [createItem.rejected]: (state, action) => {
                 console.log(action.payload)
             }
         }
