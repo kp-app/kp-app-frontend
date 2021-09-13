@@ -76,20 +76,24 @@ export const CartLayout = props => {
     return (
         <TableContainer>
             <Table>
-                <th style={{width: 420}}>
-                    <td>Название</td>
-                    <td>Количество</td>
-                    <td>Цена за шт по прайсу</td>
-                </th>
-                {cartItems.map((product) => {
-                    return (
-                        <tr>
-                            <td style={{width: 200}}>{product.fullName}</td>
-                            <QuantityCell dispatch={dispatch} product={product} token={token}></QuantityCell>
-                            <PriceCell dispatch={dispatch} product={product} token={token} style={{width: 200}}/>
-                        </tr>
-                    )
-                })}
+                <thead>
+                    <th style={{width: 420}}>
+                        <td>Название</td>
+                        <td>Количество</td>
+                        <td>Цена за шт по прайсу</td>
+                    </th>
+                </thead>
+                <tbody>
+                    {cartItems.map((product) => {
+                        return (
+                            <tr key={product._id}>
+                                <td style={{width: 200}}>{product.fullName}</td>
+                                <QuantityCell dispatch={dispatch} product={product} token={token}></QuantityCell>
+                                <PriceCell dispatch={dispatch} product={product} token={token} style={{width: 200}}/>
+                            </tr>
+                        )
+                    })}
+                </tbody>
             </Table>
             <AddCustomItem dispatch={dispatch} />
         </TableContainer>
