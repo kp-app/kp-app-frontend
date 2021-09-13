@@ -1,5 +1,4 @@
-import { useSelector } from "react-redux"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import {useState} from "react"
 import styled from "styled-components"
 import { changePrice, addItem, removeItem, updateItemPrice } from "../../../app/productsSlice"
@@ -77,11 +76,11 @@ export const CartLayout = props => {
         <TableContainer>
             <Table>
                 <thead>
-                    <th style={{width: 420}}>
+                    <tr style={{width: 420}}>
                         <td>Название</td>
                         <td>Количество</td>
                         <td>Цена за шт по прайсу</td>
-                    </th>
+                    </tr>
                 </thead>
                 <tbody>
                     {cartItems.map((product) => {
@@ -95,7 +94,7 @@ export const CartLayout = props => {
                     })}
                 </tbody>
             </Table>
-            <AddCustomItem dispatch={dispatch} />
+            <AddCustomItem dispatch={dispatch} token={token} />
         </TableContainer>
     )
 }
