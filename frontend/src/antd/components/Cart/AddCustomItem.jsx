@@ -78,5 +78,3 @@ const CustomItemForm = props => {
         <Form.Item><Button type="primary" htmlType="submit">Подтвердить</Button><Button type="default" onClick={switchView}>Свернуть</Button></Form.Item>
     </Form>
 }
-
-// useState, open up a form when redacting, button will dispatch addItem() after validation, hide form, toggle back to button "Add item"
