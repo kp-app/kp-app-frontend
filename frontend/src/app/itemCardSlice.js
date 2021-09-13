@@ -87,6 +87,57 @@ export const loadSubcategories = createAsyncThunk(
         }
     }
 )
+export const createSubcategory = createAsyncThunk(
+    'itemCard/createSubcategoriy',
+    async (data, {fulfillWithValue, rejectWithValue, dispatch}) => {
+        try {
+            let {token, params, payload} = data
+            if (Object.keys(categoryId).length !== 0) {
+                const config = {
+                    headers: {Authorization: `Bearer ${token}`}
+                };
+                const response = await axios.post(
+                    // TODO use proper params pls
+                    `${backendUrl}subcategories?categoryId=${params.categoryId}`,
+                    payload,
+                    config
+                )
+                if (response.status !== 200 && response.status !== 201) {
+                    throw new Error('Failed to return data from API')
+                }
+                return fulfillWithValue({data: response.data})
+            }
+        } catch (e) {
+            return rejectWithValue(e.message)
+        }
+    }
+)
+
+export const createCategory = createAsyncThunk(
+    'itemCard/createSubcategoriy',
+    async (data, {fulfillWithValue, rejectWithValue, dispatch}) => {
+        try {
+            let {token, payload} = data
+            if (Object.keys(categoryId).length !== 0) {
+                const config = {
+                    headers: {Authorization: `Bearer ${token}`}
+                };
+                const response = await axios.post(
+                    `${backendUrl}categories`,
+                    payload,
+                    config
+                )
+                if (response.status !== 200 && response.status !== 201) {
+                    throw new Error('Failed to return data from API')
+                }
+                return fulfillWithValue({data: response.data})
+            }
+        } catch (e) {
+            return rejectWithValue(e.message)
+        }
+    }
+)
+
 export const loadItemsByCategory = createAsyncThunk(
     'itemCard/loadItemsByCategory',
     async (data, {fulfillWithValue, rejectWithValue, dispatch}) => {
@@ -197,6 +248,18 @@ const itemCardSlice = createSlice({
             console.log(action.payload)
         },
         [loadAllSubcats.rejected]: (state, action) => {
+            console.log(action.payload)
+        },
+        [createSubcategory.fulfilled]: (state, action) => {
+            console.log(action.payload)
+        },
+        [createSubcategory.rejected]: (state, action) => {
+            console.log(action.payload)
+        },
+        [createCategory.fulfilled]: (state, action) => {
+            console.log(action.payload)
+        },
+        [createCategory.rejected]: (state, action) => {
             console.log(action.payload)
         }
     }
