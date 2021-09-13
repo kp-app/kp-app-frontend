@@ -1,10 +1,37 @@
-import { createSlice } from "@reduxjs/toolkit"
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
+import axios from "axios"
+import {backendUrl} from "../../backendConfig"
 
 const initialState = {
     addedProducts: [
     ],
     tableView: false
 }
+
+export const updateItemPrice = createAsyncThunk(
+    'products/updatePrice',
+    async (data, {fulfillWithValue, rejectWithValue}) => {
+        try {
+            const {token, payload} = data
+            const config = {
+                headers: {Authorization: `Bearer ${token}`}
+            };
+            const response = await axios.patch(
+                `${backendUrl}products/setPrice?fullName=${payload.fullName}`,
+                payload,
+                config,
+            )
+            
+            if (response.status !== 200 && response.status !== 201) {
+                throw new Error('Failed to return data from API')
+            }
+            
+            return fulfillWithValue({data: response.data})
+        } catch (e) {
+            return rejectWithValue(e.message)
+        }
+    }
+)
 
 const productsSlice = createSlice(
     {
@@ -50,6 +77,14 @@ const productsSlice = createSlice(
             },
             switchView(state) {
                 state.tableView = !state.tableView
+            }
+        },
+        extraReducers: {
+            [updateItemPrice.fulfilled]: (state, action) => {
+                console.log(action.payload)
+            },
+            [updateItemPrice.rejected]: (state, action) => {
+                console.log(action.payload)
             }
         }
     }
