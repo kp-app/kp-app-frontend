@@ -2,7 +2,7 @@ import { useSelector } from "react-redux"
 import { useDispatch } from "react-redux"
 import {useState} from "react"
 import styled from "styled-components"
-import { changePrice, addItem, removeItem } from "../../../app/productsSlice"
+import { changePrice, addItem, removeItem, updateItemPrice } from "../../../app/productsSlice"
 import { Button } from "antd"
 import {EditOutlined, CheckOutlined, PlusCircleOutlined, MinusCircleOutlined} from "@ant-design/icons"
 import { AddCustomItem } from "./AddCustomItem"
@@ -20,15 +20,21 @@ const Table = styled.table`
 `
 
 const PriceCell = props => {
+    let payload = props.product
+    const token = props.token
     const dispatch = props.dispatch
+    const [isRedactable, toggleRedact] = useState(false)
+    
     const isValid = (text) => {
         return text === "" || /^\d+$/.test(text)
     }
     const onChange = (e) => {
         isValid(e.target.value) ? dispatch(changePrice([props.product, Number(e.target.value)])) : console.log("Fuck-ass data from input")
     }
-    const [isRedactable, toggleRedact] = useState(false)
+    
     const onClick = () => {
+        isRedactable ? payload = {...payload, pricing: {...payload.pricing, pricelistCost: props.product.pricing.pricelistCost}} : null
+        isRedactable ? dispatch(updateItemPrice({token: token, payload: payload})) : null
         toggleRedact(prevState => !prevState)
     }
     return (
@@ -62,6 +68,7 @@ const QuantityCell = props => {
 export const CartLayout = props => {
     const dispatch = useDispatch()
     const cartItems = useSelector(state => state.products.addedProducts)
+    const token = useSelector(state => state.auth.token)
     
     // TODO add/remove with +/- buttons inside of quantity's td [x]
     // TODO add cost change with input (need state) [x]
@@ -78,8 +85,8 @@ export const CartLayout = props => {
                     return (
                         <tr>
                             <td style={{width: 200}}>{product.fullName}</td>
-                            <QuantityCell dispatch={dispatch} product={product}></QuantityCell>
-                            <PriceCell dispatch={dispatch} product={product} style={{width: 200}}/>
+                            <QuantityCell dispatch={dispatch} product={product} token={token}></QuantityCell>
+                            <PriceCell dispatch={dispatch} product={product} token={token} style={{width: 200}}/>
                         </tr>
                     )
                 })}
