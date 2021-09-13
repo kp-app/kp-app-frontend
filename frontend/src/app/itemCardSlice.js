@@ -1,7 +1,6 @@
 import {createSlice, createAsyncThunk} from "@reduxjs/toolkit"
 import axios from "axios"
 import {backendUrl} from "../../backendConfig"
-import {searchEveryWord} from "../utils/searchEveryWord"
 
 // create init state
 const initialState = {
