@@ -92,7 +92,7 @@ export const createSubcategory = createAsyncThunk(
     async (data, {fulfillWithValue, rejectWithValue, dispatch}) => {
         try {
             let {token, params, payload} = data
-            if (Object.keys(categoryId).length !== 0) {
+            if (Object.keys(params.categoryId).length !== 0) {
                 const config = {
                     headers: {Authorization: `Bearer ${token}`}
                 };
@@ -114,24 +114,24 @@ export const createSubcategory = createAsyncThunk(
 )
 
 export const createCategory = createAsyncThunk(
-    'itemCard/createSubcategoriy',
+    'itemCard/createCategoriy',
     async (data, {fulfillWithValue, rejectWithValue, dispatch}) => {
         try {
             let {token, payload} = data
-            if (Object.keys(categoryId).length !== 0) {
-                const config = {
-                    headers: {Authorization: `Bearer ${token}`}
-                };
-                const response = await axios.post(
-                    `${backendUrl}categories`,
-                    payload,
-                    config
-                )
-                if (response.status !== 200 && response.status !== 201) {
-                    throw new Error('Failed to return data from API')
-                }
-                return fulfillWithValue({data: response.data})
+            console.log(payload)
+            const config = {
+                headers: {Authorization: `Bearer ${token}`}
+            };
+            const response = await axios.post(
+                `${backendUrl}categories`,
+                payload,
+                config
+            )
+            if (response.status !== 200 && response.status !== 201) {
+                throw new Error('Failed to return data from API')
             }
+            return fulfillWithValue({data: response.data})
+            
         } catch (e) {
             return rejectWithValue(e.message)
         }
