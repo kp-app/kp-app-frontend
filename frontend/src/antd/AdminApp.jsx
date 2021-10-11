@@ -9,17 +9,40 @@ import {
     Input,
     Button, Breadcrumb
 } from "antd";
-import {useState} from "react";
+import {useEffect, useState} from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { createCategory, createSubcategory, loadCategories } from "../app/itemCardSlice";
 
 const AdminApp = () => {
-    const [componentType, setComponentType] = useState('item');
+    const dispatch = useDispatch()
+    const token = useSelector(state => state.auth.token)
+    const categories = useSelector(state => state.itemCard.categories)
+    const [componentType, setComponentType] = useState('category');
+    const [category, setCategory] = useState('')
+    const [subcategoryText, typeSubcategory] = useState('')
+    const [categoryText, typeCategory] = useState('')
+    const [form] = Form.useForm()
+
+    useEffect(() => {
+        dispatch(loadCategories({token}))
+    }, [categories])
+
+    
 
     const onFormLayoutChange = ({creationType}) => {
-        setComponentType(creationType);
+        setComponentType(creationType)
     }
 
     const onSubmit = (values) => {
         console.log(values)
+        if (componentType === 'category') {
+            dispatch(createCategory({token, payload: {name: categoryText}}))
+            typeCategory('')
+        } else if (componentType === 'subcategory') {
+            dispatch(createSubcategory({token, params: {categoryId: values.categorySelect}, payload: {name: subcategoryText}}))
+            typeSubcategory('')
+        }
+        form.resetFields()
     }
 
     return (
@@ -32,77 +55,45 @@ const AdminApp = () => {
                 </Breadcrumb>
                 <Form
                     labelCol={{
-                        span: 4,
+                        span: 6,
                     }}
                     wrapperCol={{
-                        span: 24,
+                        span: 18,
                     }}
                     layout="horizontal"
                     initialValues={{
-                        componentType: "item",
+                        componentType: "category",
                     }}
-                    onValuesChange={onFormLayoutChange}
                     size="default"
                     onFinish={onSubmit}
                 >
                     <Form.Item label="Что создаем" name="type">
-                        <Radio.Group>
-                            <Radio.Button value="item">Товар</Radio.Button>
-                            <Radio.Button value="category">Категория</Radio.Button>
-                            <Radio.Button value="subcategory">Подкатегория</Radio.Button>
+                        <Radio.Group onChange={e => setComponentType(e.target.value)}>
+                            <Radio.Button value="category">Категорию</Radio.Button>
+                            <Radio.Button value="subcategory">Подкатегорию</Radio.Button>
                         </Radio.Group>
                     </Form.Item>
-                    <Form.Item label="Input" name="input">
-                        <Input/>
+                    {componentType === "category" ? <Form.Item label="Имя категории" name="category">
+                        <Input value={categoryText} onChange={e => {typeCategory(e.target.value)}}/>
+                    </Form.Item> : <Form.Item label="Имя подкатегории" name="subcategory">
+                        <Input value={subcategoryText} onChange={e => {typeSubcategory(e.target.value)}}/>
                     </Form.Item>
-                    <Form.Item label="Select" name="select">
-                        <Select>
-                            <Select.Option value="demo">Demo</Select.Option>
+                    }
+                    {componentType === "subcategory" && <Form.Item label="Родительская категория" name="categorySelect">
+                        <Select onSelect={(e) => {setCategory(e)}}>
+                            {categories.map(category => <Select.Option value={category._id} key={category._id}>
+                                                            {category.name}
+                                                        </Select.Option>)}
                         </Select>
-                    </Form.Item>
-                    <Form.Item label="TreeSelect">
-                        <TreeSelect
-                            treeData={[
-                                {
-                                    title: 'Light',
-                                    value: 'light',
-                                    children: [
-                                        {
-                                            title: 'Bamboo',
-                                            value: 'bamboo',
-                                        },
-                                    ],
-                                },
-                            ]}
-                        />
-                    </Form.Item>
-                    <Form.Item label="Cascader">
-                        <Cascader
-                            options={[
-                                {
-                                    value: 'zhejiang',
-                                    label: 'Zhejiang',
-                                    children: [
-                                        {
-                                            value: 'hangzhou',
-                                            label: 'Hangzhou',
-                                        },
-                                    ],
-                                },
-                            ]}
-                        />
-                    </Form.Item>
-                    <Form.Item label="DatePicker">
-                        <DatePicker/>
-                    </Form.Item>
-                    <Form.Item label="InputNumber">
-                        <InputNumber/>
-                    </Form.Item>
-                    <Form.Item label="Switch" valuePropName="checked">
-                        <Switch/>
-                    </Form.Item>
-                    <Form.Item label="Button">
-                        <Button htmlType="submit">Button</Button>
+                    </Form.Item>}
+                    <Form.Item
+                        wrapperCol={{
+                            offset: 8,
+                            span: 16,
+                    }}>
+                        <Button type="primary" htmlType="submit">
+                            Сохранить
+                        </Button>
                     </Form.Item>
                 </Form>
             </Col>
